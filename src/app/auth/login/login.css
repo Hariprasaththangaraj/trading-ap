@@ -1,0 +1,188 @@
+/* Full Screen */
+
+.login-container {
+    width: 100%;
+    height: 100vh;
+    background: #f5f7fb;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 70px;
+
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Login Card */
+
+.login-card {
+
+    width: 450px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 40px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* Logo */
+
+.logo-section {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+
+}
+
+.logo-section h1 {
+
+    color: #1E3A8A;
+
+    font-size: 32px;
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+
+}
+
+.logo-section p {
+
+    color: #6b7280;
+
+    font-size: 15px;
+
+}
+
+
+/* Heading */
+
+.form-section h2 {
+
+    margin-bottom: 25px;
+
+    color: #111827;
+
+    font-size: 22px;
+
+    font-weight: 600;
+
+}
+
+
+/* Label */
+
+.form-group {
+
+    margin-bottom: 25px;
+
+}
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+}
+
+
+/* Dropdown */
+
+.form-group select {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: .3s;
+
+}
+
+.form-group select:focus {
+
+    border-color: #3B82F6;
+
+    box-shadow: 0 0 0 3px rgba(59,130,246,.15);
+
+}
+
+
+/* Button */
+
+button {
+
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563EB;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+button:hover {
+
+    background: #1D4ED8;
+
+}
+
+button:active {
+
+    transform: scale(.98);
+
+}
+
+
+/* Footer */
+
+.footer-section {
+
+    margin-top: 30px;
+
+    text-align: center;
+
+}
+
+.footer-section small {
+
+    color: #6b7280;
+
+}
