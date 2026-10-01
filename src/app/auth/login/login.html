@@ -1,40 +1,81 @@
-<div class="login-container">
+<div class="login-page">
 
   <div class="login-card">
 
-    <div class="logo-section">
-      <h1>📈 Trading Screen</h1>
-      <p>AI Powered Options Analysis Platform</p>
+    <!-- Back -->
+    <button
+      class="back-button"
+      type="button"
+      (click)="goToHome()">
+      ← Back
+    </button>
+
+
+    <!-- Heading -->
+    <div class="login-header">
+
+      <h1>Welcome Back</h1>
+
+      <p>Sign in to your Trading App</p>
+
     </div>
 
-    <div class="form-section">
 
-      <h2>Connect Your Broker</h2>
+    <!-- Login Form -->
+    <form>
 
+      <!-- Username -->
       <div class="form-group">
 
-        <label for="broker">Select Broker</label>
+        <label for="username">
+          Username
+        </label>
 
-        <select id="broker">
-          <option value="" selected disabled>Select Broker</option>
-          <option value="aliceblue">Alice Blue</option>
-          <option value="zerodha">Zerodha (Coming Soon)</option>
-          <option value="upstox">Upstox (Coming Soon)</option>
-          <option value="angelone">Angel One (Coming Soon)</option>
-        </select>
+        <input
+          id="username"
+          type="text"
+          placeholder="Enter your username">
 
       </div>
 
-      <button type="button" (click)="connectBroker()">
-        🔐 Connect Broker
+
+      <!-- Password -->
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter your password">
+
+      </div>
+
+
+      <!-- Sign In -->
+      <button
+        type="submit"
+        class="sign-in-submit">
+        Sign In
       </button>
 
-    </div>
+    </form>
 
-    <div class="footer-section">
-      <small>
-        Secure authentication powered by your broker.
-      </small>
+
+    <!-- Sign Up -->
+    <div class="signup-section">
+
+      <span>Don't have an account?</span>
+
+      <button
+        type="button"
+        class="signup-link"
+        (click)="goToSignup()">
+        Sign Up
+      </button>
+
     </div>
 
   </div>

@@ -1,0 +1,143 @@
+<div class="signup-page">
+
+  <div class="signup-card">
+
+    <!-- Back -->
+    <button
+      class="back-button"
+      type="button"
+      (click)="goToHome()">
+      ← Back
+    </button>
+
+
+    <!-- Header -->
+    <div class="signup-header">
+
+      <h1>Create Account</h1>
+
+      <p>Join Hedge with Hari Trading App</p>
+
+    </div>
+
+
+    <!-- Signup Form -->
+    <form>
+
+      <!-- Name -->
+      <div class="form-group">
+
+        <label for="name">
+          Full Name
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          placeholder="Enter your full name">
+
+      </div>
+
+
+      <!-- Email -->
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="Enter your email">
+
+      </div>
+
+
+      <!-- Phone -->
+      <div class="form-group">
+
+        <label for="phoneNumber">
+          Phone Number
+        </label>
+
+        <input
+          id="phoneNumber"
+          type="tel"
+          placeholder="Enter your phone number">
+
+      </div>
+
+
+      <!-- Username -->
+      <div class="form-group">
+
+        <label for="username">
+          Username
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          placeholder="Choose a username">
+
+      </div>
+
+
+      <!-- Password -->
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Create a password">
+
+      </div>
+
+
+      <!-- Confirm Password -->
+      <div class="form-group">
+
+        <label for="confirmPassword">
+          Confirm Password
+        </label>
+
+        <input
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm your password">
+
+      </div>
+
+
+      <!-- Sign Up -->
+      <button
+        type="submit"
+        class="signup-submit">
+        Create Account
+      </button>
+
+    </form>
+
+
+    <!-- Login -->
+    <div class="login-section">
+
+      <span>Already have an account?</span>
+
+      <button
+        type="button"
+        class="login-link"
+        (click)="goToLogin()">
+        Sign In
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
