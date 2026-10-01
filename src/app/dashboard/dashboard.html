@@ -1,4 +1,6 @@
-<div class="dashboard-page">
+<div
+  class="dashboard-page"
+  [class.dark-theme]="isDarkMode">
 
   <!-- Top Navigation -->
   <header class="dashboard-header">
@@ -16,6 +18,18 @@
 
 
     <div class="header-actions">
+      
+        <!-- Theme Switch -->
+  <button
+    class="theme-switch"
+    type="button"
+    (click)="toggleTheme()">
+
+    <span class="theme-switch-icon">
+      {{ isDarkMode ? '☾' : '☀' }}
+    </span>
+
+  </button>
 
       <div class="market-status">
         <span class="status-dot"></span>

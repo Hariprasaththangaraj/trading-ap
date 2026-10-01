@@ -471,3 +471,49 @@
   }
 
 }
+
+
+/* =========================
+   Theme Switch
+   ========================= */
+
+.theme-switch {
+  width: 42px;
+  height: 28px;
+
+  border: 1px solid #dfe3e9;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  padding: 0;
+
+  transition: 0.2s;
+}
+
+
+.theme-switch:hover {
+  background: #f5f7fb;
+}
+
+
+.theme-switch-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+
+/* =========================
+   Dark Theme
+   ========================= */
+
+.dashboard-page.dark-theme {
+  background: #102130;
+  color: #f1f3f7;
+}
