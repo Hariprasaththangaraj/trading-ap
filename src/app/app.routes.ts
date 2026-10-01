@@ -4,6 +4,7 @@ import { Landing } from './landing/landing';
 import { LoginComponent } from './auth/login/login';
 import { LayoutComponent } from './layout/header/header';
 import { SignupComponent } from './auth/signup/signup';
+import { DashboardComponent } from './dashboard/dashboard';
 
 export const routes: Routes = [
 
@@ -22,6 +23,10 @@ export const routes: Routes = [
         component: SignupComponent
     },
 
+    {
+      path: 'dashboard',
+  component: DashboardComponent
+},
     {
         path: 'layout',
         component: LayoutComponent

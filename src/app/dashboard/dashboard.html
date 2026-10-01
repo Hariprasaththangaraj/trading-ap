@@ -1,0 +1,298 @@
+<div class="dashboard-page">
+
+  <!-- Top Navigation -->
+  <header class="dashboard-header">
+
+    <div class="brand">
+      <div class="brand-icon">
+        T
+      </div>
+
+      <div>
+        <h2>Trading App</h2>
+        <span>Market Intelligence Platform</span>
+      </div>
+    </div>
+
+
+    <div class="header-actions">
+
+      <div class="market-status">
+        <span class="status-dot"></span>
+        Market Connected
+      </div>
+
+      <button
+        class="logout-button"
+        type="button"
+        (click)="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- Main Content -->
+  <main class="dashboard-content">
+
+    <!-- Welcome -->
+    <section class="welcome-section">
+
+      <div>
+        <p class="welcome-label">DASHBOARD</p>
+
+        <h1>Welcome back 👋</h1>
+
+        <p class="welcome-text">
+          Monitor markets, strategies and your trading activities
+          from one place.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- Market Cards -->
+    <section class="market-section">
+
+      <div class="section-header">
+        <h2>Market Overview</h2>
+
+        <span class="live-badge">
+          LIVE
+        </span>
+      </div>
+
+
+      <div class="market-grid">
+
+        <!-- NIFTY -->
+        <div class="market-card">
+
+          <div class="market-card-header">
+            <span>NIFTY 50</span>
+            <span class="market-symbol">NSE</span>
+          </div>
+
+          <h3>25,420.65</h3>
+
+          <p class="positive">
+            +125.40 &nbsp; +0.50%
+          </p>
+
+        </div>
+
+
+        <!-- BANK NIFTY -->
+        <div class="market-card">
+
+          <div class="market-card-header">
+            <span>BANK NIFTY</span>
+            <span class="market-symbol">NSE</span>
+          </div>
+
+          <h3>58,240.30</h3>
+
+          <p class="positive">
+            +280.15 &nbsp; +0.48%
+          </p>
+
+        </div>
+
+
+        <!-- SENSEX -->
+        <div class="market-card">
+
+          <div class="market-card-header">
+            <span>SENSEX</span>
+            <span class="market-symbol">BSE</span>
+          </div>
+
+          <h3>83,610.22</h3>
+
+          <p class="negative">
+            -85.30 &nbsp; -0.10%
+          </p>
+
+        </div>
+
+
+        <!-- GOLD -->
+        <div class="market-card">
+
+          <div class="market-card-header">
+            <span>GOLD</span>
+            <span class="market-symbol">MCX</span>
+          </div>
+
+          <h3>₹76,420</h3>
+
+          <p class="positive">
+            +210 &nbsp; +0.28%
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Quick Access -->
+    <section class="quick-section">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Quick Access</h2>
+
+          <p>
+            Access your trading tools and research modules.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="quick-grid">
+
+        <!-- Market Monitor -->
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            📊
+          </div>
+
+          <h3>Market Monitor</h3>
+
+          <p>
+            Track live market prices, indices and instruments.
+          </p>
+
+          <button type="button">
+            Open Monitor →
+          </button>
+
+        </div>
+
+
+        <!-- Strategy -->
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            🧠
+          </div>
+
+          <h3>Strategies</h3>
+
+          <p>
+            Create and manage your trading strategy conditions.
+          </p>
+
+          <button type="button">
+            View Strategies →
+          </button>
+
+        </div>
+
+
+        <!-- Backtest -->
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            📈
+          </div>
+
+          <h3>Backtesting</h3>
+
+          <p>
+            Test strategies using historical market data.
+          </p>
+
+          <button type="button">
+            Open Backtest →
+          </button>
+
+        </div>
+
+
+        <!-- Broker -->
+        <div class="feature-card">
+
+          <div class="feature-icon">
+            🔗
+          </div>
+
+          <h3>Broker Connection</h3>
+
+          <p>
+            Configure and manage your broker API connections.
+          </p>
+
+          <button type="button">
+            Manage Broker →
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- System Status -->
+    <section class="system-section">
+
+      <div class="section-header">
+
+        <h2>System Status</h2>
+
+      </div>
+
+
+      <div class="system-grid">
+
+        <div class="system-card">
+
+          <span class="system-dot active"></span>
+
+          <div>
+            <strong>Backend API</strong>
+            <span>Connected</span>
+          </div>
+
+        </div>
+
+
+        <div class="system-card">
+
+          <span class="system-dot active"></span>
+
+          <div>
+            <strong>Database</strong>
+            <span>Connected</span>
+          </div>
+
+        </div>
+
+
+        <div class="system-card">
+
+          <span class="system-dot active"></span>
+
+          <div>
+            <strong>Market Data</strong>
+            <span>Connected</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
