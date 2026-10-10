@@ -1,52 +1,11 @@
-<div
-  class="dashboard-page"
-  [class.dark-theme]="isDarkMode">
+<div class="dashboard-page" [class.dark-theme]="isDarkMode">
 
-  <!-- Top Navigation -->
-  <header class="dashboard-header">
-
-    <div class="brand">
-      <div class="brand-icon">
-        T
-      </div>
-
-      <div>
-        <h2>Trading App</h2>
-        <span>Market Intelligence Platform</span>
-      </div>
-    </div>
-
-
-    <div class="header-actions">
-      
-        <!-- Theme Switch -->
-  <button
-    class="theme-switch"
-    type="button"
-    (click)="toggleTheme()">
-
-    <span class="theme-switch-icon">
-      {{ isDarkMode ? '☾' : '☀' }}
-    </span>
-
-  </button>
-
-      <div class="market-status">
-        <span class="status-dot"></span>
-        Market Connected
-      </div>
-
-      <button
-        class="logout-button"
-        type="button"
-        (click)="logout()">
-        Logout
-      </button>
-
-    </div>
-
-  </header>
-
+  <!-- ==========================================
+     COMMON APPLICATION HEADER
+     Displays the shared header for this page.
+     ========================================== -->
+  <app-header (themeToggle)="toggleTheme()">
+  </app-header>
 
   <!-- Main Content -->
   <main class="dashboard-content">

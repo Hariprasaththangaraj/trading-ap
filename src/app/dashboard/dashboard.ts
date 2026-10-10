@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { Router,RouterLink } from '@angular/router';
 
+import { HeaderComponent } from '../shared/components/app-header/header';
+
 @Component({
 
   selector: 'app-dashboard',
@@ -12,7 +14,8 @@ import { Router,RouterLink } from '@angular/router';
 
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    HeaderComponent
   ],
 
   templateUrl: './dashboard.html',
