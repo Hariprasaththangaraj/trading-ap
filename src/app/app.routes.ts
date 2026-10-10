@@ -5,7 +5,7 @@ import { LoginComponent } from './auth/login/login';
 import { LayoutComponent } from './layout/header/header';
 import { SignupComponent } from './auth/signup/signup';
 import { DashboardComponent } from './dashboard/dashboard';
-
+import { BrokerManagement } from './broker-management/broker-management';
 export const routes: Routes = [
 
     {
@@ -24,12 +24,16 @@ export const routes: Routes = [
     },
 
     {
-      path: 'dashboard',
-  component: DashboardComponent
-},
+        path: 'dashboard',
+        component: DashboardComponent
+    },
     {
         path: 'layout',
         component: LayoutComponent
+    },
+    {
+        path: 'broker-management',
+        component: BrokerManagement
     }
 
 ];
