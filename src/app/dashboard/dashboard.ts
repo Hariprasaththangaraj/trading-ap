@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import { Router,RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { HeaderComponent } from '../shared/components/app-header/header';
+
+import { ThemeService } from '../shared/theme-toggle/theme';
+
+
 
 @Component({
 
@@ -26,7 +30,11 @@ import { HeaderComponent } from '../shared/components/app-header/header';
 
 export class DashboardComponent {
 
-  isDarkMode = false;
+  private themeService = inject(ThemeService);
+
+  get isDarkMode(): boolean {
+    return this.themeService.isDarkMode();
+  }
 
   constructor(
 
@@ -37,9 +45,7 @@ export class DashboardComponent {
   }
 
   toggleTheme(): void {
-
-    this.isDarkMode = !this.isDarkMode;
-
+    this.themeService.toggleTheme();
   }
 
   logout(): void {

@@ -1,6 +1,7 @@
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ThemeService } from '../../theme-toggle/theme';
 
 @Component({
   selector: 'app-header',
@@ -11,16 +12,17 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  @Output() themeToggle = new EventEmitter<void>();
+  private themeService = inject(ThemeService);
 
-  isDarkMode = false;
-
-  constructor(private router: Router) {}
+  get isDarkMode(): boolean {
+    return this.themeService.isDarkMode();
+  }
 
   toggleTheme(): void {
-    this.isDarkMode = !this.isDarkMode;
-    this.themeToggle.emit();
+    this.themeService.toggleTheme();
   }
+
+  constructor(private router: Router) {}
 
   logout(): void {
     this.router.navigate(['/login']);
