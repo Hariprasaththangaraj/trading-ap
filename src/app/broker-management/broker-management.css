@@ -536,6 +536,7 @@
 .security-heading {
   display: flex;
   align-items: center;
+  color: #172033;
   gap: 10px;
   margin-bottom: 16px;
 }
@@ -567,6 +568,7 @@
 
 .status-summary > .status-dot {
   margin-top: 5px;
+  color: #172033;
 }
 
 .status-summary strong {
@@ -987,3 +989,14 @@
 }
 
  
+.broker-card {
+  background: #d8d5db;
+
+  border: 1px solid #010305;
+
+  border-radius: 12px;
+
+  padding: 24px;
+
+  transition: 0.2s;
+}
