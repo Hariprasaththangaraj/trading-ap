@@ -1,8 +1,484 @@
-<!-- ==========================================
-     COMMON APPLICATION HEADER
-     Displays the shared header for this page.
-     ========================================== -->
-<app-header></app-header>
 
+<div class="dashboard-page broker-page" [class.dark-theme]="isDarkMode">
 
-<p>broker-management works!</p>
+  <app-header></app-header>
+
+  <main class="dashboard-content">
+
+    <!-- Page Heading -->
+    <section class="welcome-section broker-welcome">
+ 
+      <h1>Broker Connection</h1>
+
+      <p class="welcome-text">
+        Connect your broker account to trade, view holdings,
+        positions and get live market data.
+      </p>
+    </section>
+
+    <!-- Broker Selection -->
+    <section class="broker-list-section">
+
+      <div class="section-header">
+        <div>
+          <h2>Available Brokers</h2>
+          <p>Choose a broker to manage its connection.</p>
+        </div>
+      </div>
+
+      <div class="broker-grid">
+
+        <article
+          class="broker-card"
+          *ngFor="let broker of brokers"
+          [class.selected]="selectedBrokerId === broker.id"
+          [class.broker-unavailable]="!broker.available">
+
+          <div class="broker-card-top">
+
+            <div
+              class="broker-logo"
+              [ngClass]="'logo-' + broker.id">
+
+              {{ broker.logoText }}
+
+            </div>
+
+            <div class="broker-card-info">
+              <h3>{{ broker.name }}</h3>
+              <p>{{ broker.description }}</p>
+            </div>
+
+            <span
+              *ngIf="broker.recommended"
+              class="recommended-badge">
+              Recommended
+            </span>
+
+          </div>
+
+          <div class="broker-status">
+            <span
+              class="status-dot"
+              [class.status-dot-connected]="
+                selectedBrokerId === broker.id && isConnected
+              ">
+            </span>
+
+            {{
+              selectedBrokerId === broker.id
+                ? statusLabel
+                : 'Not Connected'
+            }}
+          </div>
+
+          <button
+            type="button"
+            class="broker-select-button"
+            [class.primary-button]="selectedBrokerId === broker.id"
+            [disabled]="!broker.available"
+            (click)="selectBroker(broker)">
+
+            {{ selectedBrokerId === broker.id ? 'Selected' : 'Connect' }}
+            <span aria-hidden="true">→</span>
+
+          </button>
+
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Selected Broker Workspace -->
+    <section class="broker-workspace">
+
+      <!-- Main Configuration -->
+      <div class="broker-main-panel">
+
+        <div class="selected-broker-heading">
+
+          <div
+            class="broker-logo selected-broker-logo"
+            [ngClass]="'logo-' + selectedBroker.id">
+            {{ selectedBroker.logoText }}
+          </div>
+
+          <div class="selected-broker-title">
+            <h2>{{ selectedBroker.name }}</h2>
+
+            <p>
+              {{ selectedBroker.description }}
+            </p>
+          </div>
+
+          <span
+            class="connection-badge"
+            [class.connection-badge-connected]="isConnected"
+            [class.connection-badge-error]="connectionStatus === 'error'">
+
+            <span class="status-dot"
+              [class.status-dot-connected]="isConnected">
+            </span>
+
+            {{ statusLabel }}
+          </span>
+
+        </div>
+
+        <!-- Tabs -->
+        <div class="broker-tabs" role="tablist">
+
+          <button
+            type="button"
+            role="tab"
+            [attr.aria-selected]="activeTab === 'connection'"
+            [class.active]="activeTab === 'connection'"
+            (click)="selectTab('connection')">
+            <span>🔗</span> Connection
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            [attr.aria-selected]="activeTab === 'features'"
+            [class.active]="activeTab === 'features'"
+            (click)="selectTab('features')">
+            <span>☆</span> Features
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            [attr.aria-selected]="activeTab === 'guide'"
+            [class.active]="activeTab === 'guide'"
+            (click)="selectTab('guide')">
+            <span>▤</span> Setup Guide
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            [attr.aria-selected]="activeTab === 'api'"
+            [class.active]="activeTab === 'api'"
+            (click)="selectTab('api')">
+            <span>‹ ›</span> API Details
+          </button>
+
+        </div>
+
+        <!-- Connection Tab -->
+        <div
+          *ngIf="activeTab === 'connection'"
+          class="tab-content">
+
+          <div class="form-heading">
+            <span class="form-heading-icon">⚙</span>
+
+            <div>
+              <h3>API Configuration</h3>
+              <p>
+                Enter your {{ selectedBroker.name }} credentials
+                to configure the connection.
+              </p>
+            </div>
+          </div>
+
+          <form (ngSubmit)="connectBroker()" #brokerForm="ngForm">
+
+            <div class="form-field">
+              <label for="brokerAppId">
+                App ID <span class="required">*</span>
+              </label>
+
+              <input
+                id="brokerAppId"
+                name="appId"
+                type="text"
+                [(ngModel)]="appId"
+                placeholder="Enter your broker App ID"
+                autocomplete="off"
+                required />
+            </div>
+
+            <div class="form-field">
+              <label for="brokerApiSecret">
+                API Secret <span class="required">*</span>
+              </label>
+
+              <div class="input-with-action">
+                <input
+                  id="brokerApiSecret"
+                  name="apiSecret"
+                  [type]="showApiSecret ? 'text' : 'password'"
+                  [(ngModel)]="apiSecret"
+                  placeholder="Enter your API Secret"
+                  autocomplete="new-password"
+                  required />
+
+                <button
+                  type="button"
+                  class="input-action"
+                  (click)="toggleSecretVisibility()"
+                  [attr.aria-label]="showApiSecret
+                    ? 'Hide API Secret'
+                    : 'Show API Secret'">
+                  {{ showApiSecret ? 'Hide' : 'Show' }}
+                </button>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="brokerApiKey">
+                API Key <span class="optional">(Optional)</span>
+              </label>
+
+              <div class="input-with-action">
+                <input
+                  id="brokerApiKey"
+                  name="apiKey"
+                  [type]="showApiKey ? 'text' : 'password'"
+                  [(ngModel)]="apiKey"
+                  placeholder="Enter API Key if required"
+                  autocomplete="off" />
+
+                <button
+                  type="button"
+                  class="input-action"
+                  (click)="toggleKeyVisibility()"
+                  [attr.aria-label]="showApiKey
+                    ? 'Hide API Key'
+                    : 'Show API Key'">
+                  {{ showApiKey ? 'Hide' : 'Show' }}
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="connection-message"
+              *ngIf="connectionStatus === 'error'
+                || connectionStatus === 'testing'">
+              {{ statusMessage }}
+            </div>
+
+            <div
+              class="connection-message success-message"
+              *ngIf="isConnected">
+              {{ statusMessage }}
+            </div>
+
+            <div class="connection-actions">
+
+              <button
+                type="submit"
+                class="primary-button action-button"
+                [disabled]="connectionStatus === 'testing'">
+
+                <span>🔗</span>
+                Connect to {{ selectedBroker.name }}
+
+              </button>
+
+              <button
+                type="button"
+                class="secondary-button action-button"
+                [disabled]="connectionStatus === 'testing'"
+                (click)="testConnection()">
+
+                <span>◉</span>
+                Test Connection
+
+              </button>
+
+            </div>
+
+            <button
+              *ngIf="isConnected"
+              type="button"
+              class="disconnect-button"
+              (click)="disconnectBroker()">
+              Disconnect Broker
+            </button>
+
+          </form>
+
+        </div>
+
+        <!-- Features Tab -->
+        <div
+          *ngIf="activeTab === 'features'"
+          class="tab-content">
+
+          <div class="form-heading">
+            <span class="form-heading-icon">☆</span>
+
+            <div>
+              <h3>Broker Features</h3>
+              <p>Features planned for the broker integration.</p>
+            </div>
+          </div>
+
+          <ul class="feature-list">
+            <li *ngFor="let feature of features">
+              <span class="feature-check">✓</span>
+              {{ feature }}
+            </li>
+          </ul>
+
+          <p class="info-note">
+            These features become available only after the
+            corresponding backend integration is implemented.
+          </p>
+
+        </div>
+
+        <!-- Setup Guide Tab -->
+        <div
+          *ngIf="activeTab === 'guide'"
+          class="tab-content">
+
+          <div class="form-heading">
+            <span class="form-heading-icon">▤</span>
+
+            <div>
+              <h3>Setup Guide</h3>
+              <p>Prepare your broker credentials.</p>
+            </div>
+          </div>
+
+          <ol class="setup-steps">
+            <li>
+              <strong>Open your broker developer portal</strong>
+              <p>Sign in to your broker's official account.</p>
+            </li>
+
+            <li>
+              <strong>Create or select an API application</strong>
+              <p>Follow the broker's current API setup instructions.</p>
+            </li>
+
+            <li>
+              <strong>Check the required credentials</strong>
+              <p>Confirm the App ID, API Secret and any other
+                required values.</p>
+            </li>
+
+            <li>
+              <strong>Complete secure backend integration</strong>
+              <p>Credentials must be sent securely to the backend,
+                never directly to a broker API from this page.</p>
+            </li>
+          </ol>
+
+        </div>
+
+        <!-- API Details Tab -->
+        <div
+          *ngIf="activeTab === 'api'"
+          class="tab-content">
+
+          <div class="form-heading">
+            <span class="form-heading-icon">‹ ›</span>
+
+            <div>
+              <h3>API Integration Details</h3>
+              <p>Frontend integration status.</p>
+            </div>
+          </div>
+
+          <div class="api-detail-row">
+            <span>Selected Broker</span>
+            <strong>{{ selectedBroker.name }}</strong>
+          </div>
+
+          <div class="api-detail-row">
+            <span>Frontend Form</span>
+            <strong class="text-ready">Available</strong>
+          </div>
+
+          <div class="api-detail-row">
+            <span>Backend Authentication</span>
+            <strong class="text-pending">Not Configured</strong>
+          </div>
+
+          <div class="api-detail-row">
+            <span>Live Market Data</span>
+            <strong class="text-pending">Pending Integration</strong>
+          </div>
+
+          <p class="info-note">
+            API endpoints, authentication and session handling
+            will be configured when the Spring Boot backend is ready.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- Right Side Panels -->
+      <aside class="broker-side-panel">
+
+        <div class="side-card">
+
+          <div class="side-card-heading">
+            <span class="side-heading-icon">●</span>
+            <h3>Connection Status</h3>
+          </div>
+
+          <div class="status-summary">
+
+            <span
+              class="status-dot"
+              [class.status-dot-connected]="isConnected">
+            </span>
+
+            <div>
+              <strong>{{ statusLabel }}</strong>
+              <p>{{ statusMessage }}</p>
+            </div>
+
+          </div>
+
+          <div class="demo-note">
+            Frontend demo — actual broker connectivity is not active.
+          </div>
+
+        </div>
+
+        <div class="side-card">
+
+          <div class="side-card-heading">
+            <span class="side-heading-icon blue-icon">▥</span>
+            <h3>What you can do after integration</h3>
+          </div>
+
+          <ul class="feature-list compact-list">
+            <li *ngFor="let feature of features">
+              <span class="feature-check">✓</span>
+              {{ feature }}
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="security-card">
+
+          <div class="security-heading">
+            <span>🔒</span>
+            <h3>Keep Your Credentials Safe</h3>
+          </div>
+
+          <p>
+            Do not use real API credentials in this frontend demo.
+            Secure credential handling and storage must be implemented
+            in the backend before connecting a real broker.
+          </p>
+
+        </div>
+
+      </aside>
+
+    </section>
+
+  </main>
+
+</div>
