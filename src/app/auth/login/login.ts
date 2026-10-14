@@ -45,8 +45,15 @@ export class LoginComponent {
 
           this.isLoading = false;
 
-          console.log('Login response:', response);
+          // Save JWT token
+          if (response?.token) {
+            localStorage.setItem('jwtToken', response.token);
+          } else {
+            this.errorMessage = 'JWT token not found in login response.';
+            return;
+          }
 
+          // Navigate after saving the token
           this.router.navigate(['/dashboard']);
 
         },

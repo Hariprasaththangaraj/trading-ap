@@ -1,4 +1,3 @@
-
 <div class="dashboard-page broker-page" [class.dark-theme]="isDarkMode">
 
   <app-header></app-header>
@@ -7,7 +6,7 @@
 
     <!-- Page Heading -->
     <section class="welcome-section broker-welcome">
- 
+
       <h1>Broker Connection</h1>
 
       <p class="welcome-text">
@@ -28,17 +27,12 @@
 
       <div class="broker-grid">
 
-        <article
-          class="broker-card"
-          *ngFor="let broker of brokers"
-          [class.selected]="selectedBrokerId === broker.id"
+        <article class="broker-card" *ngFor="let broker of brokers" [class.selected]="selectedBrokerId === broker.id"
           [class.broker-unavailable]="!broker.available">
 
           <div class="broker-card-top">
 
-            <div
-              class="broker-logo"
-              [ngClass]="'logo-' + broker.id">
+            <div class="broker-logo" [ngClass]="'logo-' + broker.id">
 
               {{ broker.logoText }}
 
@@ -49,35 +43,27 @@
               <p>{{ broker.description }}</p>
             </div>
 
-            <span
-              *ngIf="broker.recommended"
-              class="recommended-badge">
+            <span *ngIf="broker.recommended" class="recommended-badge">
               Recommended
             </span>
 
           </div>
 
           <div class="broker-status">
-            <span
-              class="status-dot"
-              [class.status-dot-connected]="
+            <span class="status-dot" [class.status-dot-connected]="
                 selectedBrokerId === broker.id && isConnected
               ">
             </span>
 
             {{
-              selectedBrokerId === broker.id
-                ? statusLabel
-                : 'Not Connected'
+            selectedBrokerId === broker.id
+            ? statusLabel
+            : 'Not Connected'
             }}
           </div>
 
-          <button
-            type="button"
-            class="broker-select-button"
-            [class.primary-button]="selectedBrokerId === broker.id"
-            [disabled]="!broker.available"
-            (click)="selectBroker(broker)">
+          <button type="button" class="broker-select-button" [class.primary-button]="selectedBrokerId === broker.id"
+            [disabled]="!broker.available" (click)="selectBroker(broker)">
 
             {{ selectedBrokerId === broker.id ? 'Selected' : 'Connect' }}
             <span aria-hidden="true">→</span>
@@ -97,9 +83,7 @@
 
         <div class="selected-broker-heading">
 
-          <div
-            class="broker-logo selected-broker-logo"
-            [ngClass]="'logo-' + selectedBroker.id">
+          <div class="broker-logo selected-broker-logo" [ngClass]="'logo-' + selectedBroker.id">
             {{ selectedBroker.logoText }}
           </div>
 
@@ -111,13 +95,10 @@
             </p>
           </div>
 
-          <span
-            class="connection-badge"
-            [class.connection-badge-connected]="isConnected"
+          <span class="connection-badge" [class.connection-badge-connected]="isConnected"
             [class.connection-badge-error]="connectionStatus === 'error'">
 
-            <span class="status-dot"
-              [class.status-dot-connected]="isConnected">
+            <span class="status-dot" [class.status-dot-connected]="isConnected">
             </span>
 
             {{ statusLabel }}
@@ -128,48 +109,30 @@
         <!-- Tabs -->
         <div class="broker-tabs" role="tablist">
 
-          <button
-            type="button"
-            role="tab"
-            [attr.aria-selected]="activeTab === 'connection'"
-            [class.active]="activeTab === 'connection'"
-            (click)="selectTab('connection')">
+          <button type="button" role="tab" [attr.aria-selected]="activeTab === 'connection'"
+            [class.active]="activeTab === 'connection'" (click)="selectTab('connection')">
             <span>🔗</span> Connection
           </button>
 
-          <button
-            type="button"
-            role="tab"
-            [attr.aria-selected]="activeTab === 'features'"
-            [class.active]="activeTab === 'features'"
-            (click)="selectTab('features')">
+          <button type="button" role="tab" [attr.aria-selected]="activeTab === 'features'"
+            [class.active]="activeTab === 'features'" (click)="selectTab('features')">
             <span>☆</span> Features
           </button>
 
-          <button
-            type="button"
-            role="tab"
-            [attr.aria-selected]="activeTab === 'guide'"
-            [class.active]="activeTab === 'guide'"
-            (click)="selectTab('guide')">
+          <button type="button" role="tab" [attr.aria-selected]="activeTab === 'guide'"
+            [class.active]="activeTab === 'guide'" (click)="selectTab('guide')">
             <span>▤</span> Setup Guide
           </button>
 
-          <button
-            type="button"
-            role="tab"
-            [attr.aria-selected]="activeTab === 'api'"
-            [class.active]="activeTab === 'api'"
-            (click)="selectTab('api')">
+          <button type="button" role="tab" [attr.aria-selected]="activeTab === 'api'"
+            [class.active]="activeTab === 'api'" (click)="selectTab('api')">
             <span>‹ ›</span> API Details
           </button>
 
         </div>
 
         <!-- Connection Tab -->
-        <div
-          *ngIf="activeTab === 'connection'"
-          class="tab-content">
+        <div *ngIf="activeTab === 'connection'" class="tab-content">
 
           <div class="form-heading">
             <span class="form-heading-icon">⚙</span>
@@ -186,18 +149,30 @@
           <form (ngSubmit)="connectBroker()" #brokerForm="ngForm">
 
             <div class="form-field">
-              <label for="brokerAppId">
-                App ID <span class="required">*</span>
+              <label for="brokerName">
+                Broker Name <span class="required">*</span>
               </label>
 
-              <input
-                id="brokerAppId"
-                name="appId"
-                type="text"
-                [(ngModel)]="appId"
-                placeholder="Enter your broker App ID"
-                autocomplete="off"
-                required />
+              <input id="brokerName" name="brokerName" type="text" [(ngModel)]="brokerName"
+                placeholder="Enter your broker name" autocomplete="off" readonly required />
+            </div>
+
+            <div class="form-field">
+              <label for="clientId">
+                Client ID <span class="required">*</span>
+              </label>
+
+              <input id="clientId" name="clientId" type="text" [(ngModel)]="userId"
+                placeholder="Enter your broker Client ID" autocomplete="off" required />
+            </div>
+
+            <div class="form-field">
+              <label for="brokerAppId">
+                App Key <span class="required">*</span>
+              </label>
+
+              <input id="brokerAppId" name="appKey" type="text" [(ngModel)]="appKey"
+                placeholder="Enter your broker App Key" autocomplete="off" required />
             </div>
 
             <div class="form-field">
@@ -206,20 +181,10 @@
               </label>
 
               <div class="input-with-action">
-                <input
-                  id="brokerApiSecret"
-                  name="apiSecret"
-                  [type]="showApiSecret ? 'text' : 'password'"
-                  [(ngModel)]="apiSecret"
-                  placeholder="Enter your API Secret"
-                  autocomplete="new-password"
-                  required />
+                <input id="brokerApiSecret" name="apiSecret" [type]="showApiSecret ? 'text' : 'password'"
+                  [(ngModel)]="apiSecret" placeholder="Enter your API Secret" autocomplete="new-password" required />
 
-                <button
-                  type="button"
-                  class="input-action"
-                  (click)="toggleSecretVisibility()"
-                  [attr.aria-label]="showApiSecret
+                <button type="button" class="input-action" (click)="toggleSecretVisibility()" [attr.aria-label]="showApiSecret
                     ? 'Hide API Secret'
                     : 'Show API Secret'">
                   {{ showApiSecret ? 'Hide' : 'Show' }}
@@ -229,23 +194,14 @@
 
             <div class="form-field">
               <label for="brokerApiKey">
-                API Key <span class="optional">(Optional)</span>
+                API ID <span class="optional">(Optional)</span>
               </label>
 
               <div class="input-with-action">
-                <input
-                  id="brokerApiKey"
-                  name="apiKey"
-                  [type]="showApiKey ? 'text' : 'password'"
-                  [(ngModel)]="apiKey"
-                  placeholder="Enter API Key if required"
-                  autocomplete="off" />
+                <input id="brokerApiKey" name="apiKey" [type]="showApiKey ? 'text' : 'password'" [(ngModel)]="apiKey"
+                  placeholder="Enter API Key if required" autocomplete="off" />
 
-                <button
-                  type="button"
-                  class="input-action"
-                  (click)="toggleKeyVisibility()"
-                  [attr.aria-label]="showApiKey
+                <button type="button" class="input-action" (click)="toggleKeyVisibility()" [attr.aria-label]="showApiKey
                     ? 'Hide API Key'
                     : 'Show API Key'">
                   {{ showApiKey ? 'Hide' : 'Show' }}
@@ -253,35 +209,25 @@
               </div>
             </div>
 
-            <div
-              class="connection-message"
-              *ngIf="connectionStatus === 'error'
+            <div class="connection-message" *ngIf="connectionStatus === 'error'
                 || connectionStatus === 'testing'">
               {{ statusMessage }}
             </div>
 
-            <div
-              class="connection-message success-message"
-              *ngIf="isConnected">
+            <div class="connection-message success-message" *ngIf="isConnected">
               {{ statusMessage }}
             </div>
 
             <div class="connection-actions">
 
-              <button
-                type="submit"
-                class="primary-button action-button"
-                [disabled]="connectionStatus === 'testing'">
+              <button type="submit" class="primary-button action-button" [disabled]="connectionStatus === 'testing'">
 
                 <span>🔗</span>
                 Connect to {{ selectedBroker.name }}
 
               </button>
 
-              <button
-                type="button"
-                class="secondary-button action-button"
-                [disabled]="connectionStatus === 'testing'"
+              <button type="button" class="secondary-button action-button" [disabled]="connectionStatus === 'testing'"
                 (click)="testConnection()">
 
                 <span>◉</span>
@@ -291,11 +237,7 @@
 
             </div>
 
-            <button
-              *ngIf="isConnected"
-              type="button"
-              class="disconnect-button"
-              (click)="disconnectBroker()">
+            <button *ngIf="isConnected" type="button" class="disconnect-button" (click)="disconnectBroker()">
               Disconnect Broker
             </button>
 
@@ -304,9 +246,7 @@
         </div>
 
         <!-- Features Tab -->
-        <div
-          *ngIf="activeTab === 'features'"
-          class="tab-content">
+        <div *ngIf="activeTab === 'features'" class="tab-content">
 
           <div class="form-heading">
             <span class="form-heading-icon">☆</span>
@@ -332,9 +272,7 @@
         </div>
 
         <!-- Setup Guide Tab -->
-        <div
-          *ngIf="activeTab === 'guide'"
-          class="tab-content">
+        <div *ngIf="activeTab === 'guide'" class="tab-content">
 
           <div class="form-heading">
             <span class="form-heading-icon">▤</span>
@@ -372,9 +310,7 @@
         </div>
 
         <!-- API Details Tab -->
-        <div
-          *ngIf="activeTab === 'api'"
-          class="tab-content">
+        <div *ngIf="activeTab === 'api'" class="tab-content">
 
           <div class="form-heading">
             <span class="form-heading-icon">‹ ›</span>
@@ -426,9 +362,7 @@
 
           <div class="status-summary">
 
-            <span
-              class="status-dot"
-              [class.status-dot-connected]="isConnected">
+            <span class="status-dot" [class.status-dot-connected]="isConnected">
             </span>
 
             <div>

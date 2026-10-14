@@ -4,6 +4,7 @@ import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../shared/components/app-header/header';
 import { ThemeService } from '../shared/theme-toggle/theme';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 type BrokerId =
   | 'aliceblue'
@@ -33,6 +34,7 @@ interface Broker {
 })
 export class BrokerManagement {
   private readonly themeService = inject(ThemeService);
+  private readonly http = inject(HttpClient);
 
   isDarkMode = false;
 
@@ -42,9 +44,11 @@ export class BrokerManagement {
   showApiSecret = false;
   showApiKey = false;
 
-  appId = '';
-  apiSecret = '';
-  apiKey = '';
+  appId = '';          // Optional API ID
+  appKey = '';         // App Key
+  apiSecret = '';      // API Secret
+  userId = 'AB047757'; // Client ID
+  brokerName = 'Aliceblue';
 
   connectionStatus: 'disconnected' | 'testing' | 'connected' | 'error'
     = 'disconnected';
@@ -142,7 +146,8 @@ export class BrokerManagement {
 
     this.appId = '';
     this.apiSecret = '';
-    this.apiKey = '';
+    this.appKey = '';
+    this.userId = '';
 
     this.connectionStatus = 'disconnected';
     this.statusMessage = 'Connect your account to start trading.';
@@ -161,16 +166,67 @@ export class BrokerManagement {
   }
 
   connectBroker(): void {
-    if (!this.appId.trim() || !this.apiSecret.trim()) {
+    if (
+      !this.userId.trim() ||
+      !this.appKey.trim() ||
+      !this.apiSecret.trim()
+    ) {
       this.connectionStatus = 'error';
-      this.statusMessage = 'Please enter the required App ID and API Secret.';
+      this.statusMessage =
+        'Please enter the Client ID, App Key and API Secret.';
       return;
     }
 
-    // UI demo only. No broker API call is made here.
+    const payload = {
+      brokerName: this.brokerName,
+      appKey: this.appKey.trim(),
+      appSecret: this.apiSecret,
+      appId: this.appId.trim(),
+      userId: this.userId.trim()
+    };
+
     this.connectionStatus = 'testing';
-    this.statusMessage =
-      'Demo mode: backend authentication is not configured yet.';
+    this.statusMessage = 'Connecting to backend...';
+    const token = localStorage.getItem('jwtToken');
+
+    if (!token) {
+      this.connectionStatus = 'error';
+      this.statusMessage = 'Please log in before connecting your broker.';
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    this.http
+      .post(
+        'http://localhost:8080/api/brokerConfig/connection',
+        payload,
+        { headers }
+      )
+      .subscribe({
+        next: (response) => {
+          this.connectionStatus = 'connected';
+          this.statusMessage =
+            'Backend response received successfully.';
+
+          console.log('Broker connection request succeeded.');
+        },
+
+        error: (error) => {
+          this.connectionStatus = 'error';
+
+          if (error.status === 0) {
+            this.statusMessage =
+              'Cannot reach backend. Check Spring Boot and CORS settings.';
+          } else {
+            this.statusMessage =
+              `Backend request failed. HTTP status: ${error.status}`;
+          }
+
+          console.error('Broker connection request failed.');
+        }
+      });
   }
 
   testConnection(): void {
