@@ -42,7 +42,7 @@ export class BrokerManagement {
   activeTab: BrokerTab = 'connection';
 
   showApiSecret = false;
-  showApiKey = false;
+  showAppId = false;
 
   appId = '';          // Optional API ID
   appKey = '';         // App Key
@@ -162,72 +162,81 @@ export class BrokerManagement {
   }
 
   toggleKeyVisibility(): void {
-    this.showApiKey = !this.showApiKey;
+    this.showAppId = !this.showAppId    ;
   }
-
+ 
   connectBroker(): void {
-    if (
-      !this.userId.trim() ||
-      !this.appKey.trim() ||
-      !this.apiSecret.trim()
-    ) {
-      this.connectionStatus = 'error';
-      this.statusMessage =
-        'Please enter the Client ID, App Key and API Secret.';
-      return;
-    }
-
-    const payload = {
-      brokerName: this.brokerName,
-      appKey: this.appKey.trim(),
-      appSecret: this.apiSecret,
-      appId: this.appId.trim(),
-      userId: this.userId.trim()
-    };
-
-    this.connectionStatus = 'testing';
-    this.statusMessage = 'Connecting to backend...';
-    const token = localStorage.getItem('jwtToken');
-
-    if (!token) {
-      this.connectionStatus = 'error';
-      this.statusMessage = 'Please log in before connecting your broker.';
-      return;
-    }
-
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    this.http
-      .post(
-        'http://localhost:8080/api/brokerConfig/connection',
-        payload,
-        { headers }
-      )
-      .subscribe({
-        next: (response) => {
-          this.connectionStatus = 'connected';
-          this.statusMessage =
-            'Backend response received successfully.';
-
-          console.log('Broker connection request succeeded.');
-        },
-
-        error: (error) => {
-          this.connectionStatus = 'error';
-
-          if (error.status === 0) {
-            this.statusMessage =
-              'Cannot reach backend. Check Spring Boot and CORS settings.';
-          } else {
-            this.statusMessage =
-              `Backend request failed. HTTP status: ${error.status}`;
-          }
-
-          console.error('Broker connection request failed.');
-        }
-      });
+  if (
+    !this.userId.trim() ||
+    !this.appKey.trim() ||
+    !this.apiSecret.trim()
+  ) {
+    this.connectionStatus = 'error';
+    this.statusMessage =
+      'Please enter the Client ID, App Key and API Secret.';
+    return;
   }
+
+  const token = localStorage.getItem('jwtToken');
+
+  if (!token) {
+    this.connectionStatus = 'error';
+    this.statusMessage = 'Please log in before connecting your broker.';
+    return;
+  }
+
+  const payload = {
+    brokerName: this.brokerName,
+    appKey: this.appKey.trim(),
+    appSecret: this.apiSecret,
+    appId: this.appId.trim(),
+    userId: this.userId.trim()
+  };
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  this.connectionStatus = 'testing';
+  this.statusMessage = 'Saving configuration...';
+
+  this.http.post(
+    'http://localhost:8080/api/brokerConfig/connection',
+    payload,
+    {
+      headers,
+      responseType: 'text'
+    }
+  ).subscribe({
+    next: (loginUrl) => {
+      const url = loginUrl.trim();
+
+      if (!url.startsWith('https://ant.aliceblueonline.com/')) {
+        this.connectionStatus = 'error';
+        this.statusMessage = 'Invalid AliceBlue login URL received.';
+        return;
+      }
+
+      this.statusMessage = 'Opening AliceBlue login...';
+      window.location.assign(url);
+    },
+
+    error: (error) => {
+      this.connectionStatus = 'error';
+
+      this.statusMessage =
+        error.status === 0
+          ? 'Cannot reach backend. Check Spring Boot and CORS settings.'
+          : `Backend request failed. HTTP status: ${error.status}`;
+
+      console.error('Broker request failed:', {
+        status: error.status,
+        message: error.message,
+        backendError: error.error
+      });
+    }
+  });
+}
 
   testConnection(): void {
     if (!this.appId.trim() || !this.apiSecret.trim()) {

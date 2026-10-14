@@ -193,18 +193,18 @@
             </div>
 
             <div class="form-field">
-              <label for="brokerApiKey">
+              <label for="brokerAppId">
                 API ID <span class="optional">(Optional)</span>
               </label>
 
               <div class="input-with-action">
-                <input id="brokerApiKey" name="apiKey" [type]="showApiKey ? 'text' : 'password'" [(ngModel)]="apiKey"
+                <input id="brokerAppId" name="appId" [type]="showAppId ? 'text' : 'password'" [(ngModel)]="appId"
                   placeholder="Enter API Key if required" autocomplete="off" />
 
-                <button type="button" class="input-action" (click)="toggleKeyVisibility()" [attr.aria-label]="showApiKey
-                    ? 'Hide API Key'
-                    : 'Show API Key'">
-                  {{ showApiKey ? 'Hide' : 'Show' }}
+                <button type="button" class="input-action" (click)="toggleKeyVisibility()" [attr.aria-label]="showAppId
+                    ? 'Hide API ID'     
+                    : 'Show API ID'">
+                  {{ showAppId ? 'Hide' : 'Show' }}
                 </button>
               </div>
             </div>
