@@ -15,6 +15,16 @@ type BrokerId =
 
 type BrokerTab = 'connection' | 'features' | 'guide' | 'api';
 
+// STEP 1: Add this interface here
+interface BrokerDetailsResponse {
+  appId: string | null;
+  appKey: string;
+  appSecret: string;
+  brokerName: string;
+  clientId: string;
+  userId: number;
+}
+
 interface Broker {
   id: BrokerId;
   name: string;
@@ -47,7 +57,7 @@ export class BrokerManagement {
   appId = '';          // Optional API ID
   appKey = '';         // App Key
   apiSecret = '';      // API Secret
-  userId = 'AB047757'; // Client ID
+  clientId = 'AB047757'; // Client ID
   brokerName = 'Aliceblue';
 
   connectionStatus: 'disconnected' | 'testing' | 'connected' | 'error'
@@ -136,22 +146,30 @@ export class BrokerManagement {
     this.isDarkMode = !this.isDarkMode;
   }
 
-  selectBroker(broker: Broker): void {
-    if (!broker.available) {
-      return;
-    }
 
-    this.selectedBrokerId = broker.id;
-    this.activeTab = 'connection';
-
-    this.appId = '';
-    this.apiSecret = '';
-    this.appKey = '';
-    this.userId = '';
-
-    this.connectionStatus = 'disconnected';
-    this.statusMessage = 'Connect your account to start trading.';
+selectBroker(broker: Broker): void {
+  if (!broker.available) {
+    return;
   }
+
+  this.selectedBrokerId = broker.id;
+  this.activeTab = 'connection';
+
+  this.appId = '';
+  this.appKey = '';
+  this.apiSecret = '';
+  this.clientId = '';
+  this.brokerName =
+    broker.id === 'aliceblue' ? 'Aliceblue' : broker.name;
+
+  this.connectionStatus = 'disconnected';
+  this.statusMessage = 'Connect your account to start trading.';
+
+  if (broker.id === 'aliceblue') {
+    this.getBrokerDetails();
+  }
+}
+
 
   selectTab(tab: BrokerTab): void {
     this.activeTab = tab;
@@ -164,10 +182,56 @@ export class BrokerManagement {
   toggleKeyVisibility(): void {
     this.showAppId = !this.showAppId    ;
   }
+
+  
+getBrokerDetails(): void {
+  const token = localStorage.getItem('jwtToken');
+
+  if (!token) {
+    this.statusMessage = 'Please log in before loading broker details.';
+    return;
+  }
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  this.http.get<BrokerDetailsResponse>(
+    'http://localhost:8080/api/brokerConfig/getBrokerDetails',
+    {
+      headers,
+      params: {
+        userId: '4',
+        brokerName: 'Aliceblue'
+      }
+    }
+  ).subscribe({
+    next: (response) => {
+      this.brokerName = response.brokerName;
+      this.clientId = response.clientId;
+      this.appKey = response.appKey;
+      this.apiSecret = response.appSecret;
+      this.appId = response.appId ?? '';
+
+      console.log('Broker details loaded successfully');
+    },
+    error: (error) => {
+      console.error('Failed to load broker details:', error);
+
+      this.statusMessage =
+        error.status === 404
+          ? 'Alice Blue configuration not found.'
+          : error.status === 401 || error.status === 403
+            ? 'Authentication failed. Please log in again.'
+            : 'Unable to load Alice Blue configuration.';
+    }
+  });
+}
+
  
   connectBroker(): void {
   if (
-    !this.userId.trim() ||
+    !this.clientId.trim() ||
     !this.appKey.trim() ||
     !this.apiSecret.trim()
   ) {
@@ -190,7 +254,7 @@ export class BrokerManagement {
     appKey: this.appKey.trim(),
     appSecret: this.apiSecret,
     appId: this.appId.trim(),
-    userId: this.userId.trim()
+    clientId: this.clientId.trim()
   };
 
   const headers = new HttpHeaders({
