@@ -1,7 +1,5 @@
-
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ThemeService } from '../shared/theme-toggle/theme';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -42,7 +40,6 @@ interface Broker {
   styleUrl: './broker-management.css'
 })
 export class BrokerManagement {
-  private readonly themeService = inject(ThemeService);
   private readonly http = inject(HttpClient);
 
   isDarkMode = false;
@@ -140,12 +137,7 @@ export class BrokerManagement {
     }
   }
 
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
-    this.isDarkMode = !this.isDarkMode;
-  }
-
-
+ 
 selectBroker(broker: Broker): void {
   if (!broker.available) {
     return;

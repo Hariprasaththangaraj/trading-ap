@@ -5,9 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 
-import { ThemeService } from '../shared/theme-toggle/theme';
-
-
 
 @Component({
 
@@ -29,24 +26,12 @@ import { ThemeService } from '../shared/theme-toggle/theme';
 
 export class DashboardComponent {
 
-  private themeService = inject(ThemeService);
-
-  get isDarkMode(): boolean {
-    return this.themeService.isDarkMode();
-  }
 
   constructor(
 
     private router: Router
 
-  ) {
-
-  }
-
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
-  }
-
+  ) {}
   logout(): void {
 
     this.router.navigate(['/login']);

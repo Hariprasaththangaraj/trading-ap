@@ -4,9 +4,9 @@ import { Routes } from '@angular/router';
 import { Landing } from './landing/landing';
 import { LoginComponent } from './auth/login/login';
 import { SignupComponent } from './auth/signup/signup';
-import { AppLayout } from './layout/header/header';
 import { DashboardComponent } from './dashboard/dashboard';
 import { BrokerManagement } from './broker-management/broker-management';
+import { AppLayout } from './layout/header/header';
 
 export const routes: Routes = [
 
@@ -26,8 +26,7 @@ export const routes: Routes = [
     path: 'signup',
     component: SignupComponent
   },
-
-  // Common layout for trading pages
+    // Common layout for authenticated pages
   {
     path: '',
     component: AppLayout,
@@ -48,5 +47,4 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'dashboard'
   }
-
 ];
