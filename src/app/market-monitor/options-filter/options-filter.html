@@ -1,1 +1,112 @@
-<p>options-filter works!</p>
+
+<div class="options-filter-page">
+
+  <div class="page-heading">
+    <div>
+      <h1>Options Filter</h1>
+      <p>Live option contracts with market data and Greeks</p>
+    </div>
+
+    <div class="market-summary">
+      <span class="market-symbol">NIFTY</span>
+      <div class="market-price">24,862.35</div>
+      <div class="market-change">
+        ▲ 128.40 (0.52%)
+      </div>
+      <span class="market-time">Illustrative market data</span>
+    </div>
+  </div>
+
+  <section class="contracts-card">
+
+    <div class="contracts-header">
+      <div>
+        <h2>Matching Contracts</h2>
+        <p>Options market data and Greeks</p>
+      </div>
+
+      <span class="contract-count">
+        Total: {{ contracts.length }} contracts
+      </span>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="options-table">
+
+        <thead>
+          <tr>
+            <th>Symbol ↕</th>
+            <th>Type ↕</th>
+            <th>Strike ↕</th>
+            <th>LTP ↕</th>
+            <th>Change % ↕</th>
+            <th>IV ↕</th>
+            <th>Delta ↕</th>
+            <th>Gamma ↕</th>
+            <th>Theta ↕</th>
+            <th>Vega ↕</th>
+            <th>Volume ↕</th>
+            <th>OI ↕</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (contract of contracts; track contract.id) {
+            <tr>
+              <td class="symbol-cell">{{ contract.symbol }}</td>
+
+              <td>
+                <span
+                  class="type-badge"
+                  [class.call-badge]="contract.type === 'CE'"
+                  [class.put-badge]="contract.type === 'PE'">
+                  {{ contract.type }}
+                </span>
+              </td>
+
+              <td>{{ contract.strike | number }}</td>
+
+              <td class="ltp-cell">
+                {{ contract.ltp | number:'1.2-2' }}
+              </td>
+
+              <td
+                [class.positive]="contract.changePercent >= 0"
+                [class.negative]="contract.changePercent < 0">
+                {{ contract.changePercent > 0 ? '+' : '' }}{{ contract.changePercent | number:'1.2-2' }}%
+              </td>
+
+              <td>{{ contract.iv | number:'1.1-1' }}</td>
+              <td>{{ contract.delta | number:'1.2-4' }}</td>
+              <td>{{ contract.gamma | number:'1.4-4' }}</td>
+
+              <td
+                [class.positive]="contract.theta >= 0"
+                [class.negative]="contract.theta < 0">
+                {{ contract.theta | number:'1.2-2' }}
+              </td>
+
+              <td>{{ contract.vega | number:'1.2-2' }}</td>
+              <td>{{ contract.volume | number }}</td>
+              <td>{{ contract.oi | number }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="12" class="empty-state">
+                No option contracts available.
+              </td>
+            </tr>
+          }
+        </tbody>
+
+      </table>
+    </div>
+
+    <div class="table-footer">
+      <span>Showing {{ contracts.length }} contracts</span>
+      <span>Scroll horizontally to view all columns →</span>
+    </div>
+
+  </section>
+
+</div>

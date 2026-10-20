@@ -3,7 +3,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-market-monitor',
-  imports: [RouterLink, RouterOutlet],
+  imports: [ RouterOutlet],
   templateUrl: './market-monitor.html',
   styleUrl: './market-monitor.css',
 })
