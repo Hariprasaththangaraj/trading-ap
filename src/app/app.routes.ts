@@ -7,6 +7,8 @@ import { SignupComponent } from './auth/signup/signup';
 import { DashboardComponent } from './dashboard/dashboard';
 import { BrokerManagement } from './broker-management/broker-management';
 import { AppLayout } from './layout/header/header';
+import { MarketMonitor } from './market-monitor/market-monitor';
+import { OptionsFilter } from './market-monitor/options-filter/options-filter';
 
 export const routes: Routes = [
 
@@ -26,7 +28,7 @@ export const routes: Routes = [
     path: 'signup',
     component: SignupComponent
   },
-    // Common layout for authenticated pages
+  // Common layout for authenticated pages
   {
     path: '',
     component: AppLayout,
@@ -38,6 +40,16 @@ export const routes: Routes = [
       {
         path: 'broker-management',
         component: BrokerManagement
+      },
+      {
+        path: 'market-monitor',
+        component: MarketMonitor,
+        children: [
+          {
+            path: 'options-filter',
+            component: OptionsFilter
+          }
+        ]
       }
     ]
   },
