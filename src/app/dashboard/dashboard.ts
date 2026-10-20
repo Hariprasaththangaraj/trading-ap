@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 import { Router, RouterLink } from '@angular/router';
 
-import { HeaderComponent } from '../shared/components/app-header/header';
 
 import { ThemeService } from '../shared/theme-toggle/theme';
 
@@ -18,8 +17,8 @@ import { ThemeService } from '../shared/theme-toggle/theme';
 
   imports: [
     CommonModule,
-    RouterLink,
-    HeaderComponent
+    RouterLink
+    
   ],
 
   templateUrl: './dashboard.html',

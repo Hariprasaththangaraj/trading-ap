@@ -1,7 +1,6 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { HeaderComponent } from '../shared/components/app-header/header';
 import { ThemeService } from '../shared/theme-toggle/theme';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -38,7 +37,7 @@ interface Broker {
 @Component({
   selector: 'app-broker-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './broker-management.html',
   styleUrl: './broker-management.css'
 })
