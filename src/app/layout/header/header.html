@@ -1,54 +1,224 @@
-<header class="header">
-    <div class="logo">
-        📈 Trading Screen
+
+<div class="app-layout" [class.collapsed]="isCollapsed">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="app-sidebar">
+
+    <!-- Brand and Toggle -->
+    <div class="sidebar-header">
+
+      <a class="brand" routerLink="/dashboard">
+        <span class="brand-logo">T</span>
+
+        <span class="brand-details">
+          <span class="brand-name">Trading App</span>
+          <span class="brand-subtitle">
+            Market Intelligence Platform
+          </span>
+        </span>
+      </a>
+
+      <button
+        type="button"
+        class="sidebar-toggle"
+        (click)="toggleSidebar()"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="app-sidebar"
+        [attr.title]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+        [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+
+        <span class="toggle-icon">
+          {{ isCollapsed ? '»' : '«' }}
+        </span>
+      </button>
+
     </div>
-    <div> Nifty : </div>
-    <div> Nifty Future: </div>
-    <div>
-        <input class="search" type="text" placeholder="Search stocks...">
+
+    <!-- Navigation -->
+    <nav class="sidebar-nav" aria-label="Main navigation">
+
+      <a
+        class="nav-item"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeSidebarOnMobile()"
+        title="Dashboard">
+
+        <span class="nav-icon">⌂</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/market-monitor"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Market Monitor">
+
+        <span class="nav-icon">▥</span>
+        <span class="nav-label">Market Monitor</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/option-chain"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Option Chain">
+
+        <span class="nav-icon">▤</span>
+        <span class="nav-label">Option Chain</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/strategies"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Strategies">
+
+        <span class="nav-icon">◎</span>
+        <span class="nav-label">Strategies</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/backtesting"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Backtesting">
+
+        <span class="nav-icon">▧</span>
+        <span class="nav-label">Backtesting</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/indicators"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Indicators">
+
+        <span class="nav-icon">↗</span>
+        <span class="nav-label">Indicators</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/watchlist"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Watchlist">
+
+        <span class="nav-icon">♡</span>
+        <span class="nav-label">Watchlist</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/orders"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Orders and Positions">
+
+        <span class="nav-icon">▣</span>
+        <span class="nav-label">Orders &amp; Positions</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/broker-connection"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Broker Connection">
+
+        <span class="nav-icon">↔</span>
+        <span class="nav-label">Broker Connection</span>
+      </a>
+
+      <a
+        class="nav-item"
+        routerLink="/settings"
+        routerLinkActive="active"
+        (click)="closeSidebarOnMobile()"
+        title="Settings">
+
+        <span class="nav-icon">⚙</span>
+        <span class="nav-label">Settings</span>
+      </a>
+
+    </nav>
+
+    <!-- User Profile -->
+    <div class="sidebar-footer">
+
+      <div class="user-avatar">H</div>
+
+      <div class="user-details">
+        <span class="user-name">Trader</span>
+        <span class="user-role">Account Profile</span>
+      </div>
+
+      <span class="profile-arrow">›</span>
+
     </div>
-    <div> Bank Nifty : </div>
-    <div> Bank Nifty Future: </div>
-
-    <div class="profile">
-        Hari's Trading App
-    </div>
-</header>
-
-<div class="container">
-
-  <aside class="sidebar">
-
-    <ul>
-
-      <li class="active">Dashboard</li>
-
-      <li>Watchlist</li>
-
-      <li>Market Watch</li>
-
-      <li>Option Chain</li>
-
-      <li>Orders</li>
-
-      <li>Positions</li>
-
-      <li>Portfolio</li>
-
-      <li>Settings</li>
-
-    </ul>
 
   </aside>
 
+  <!-- Mobile Backdrop -->
+  @if (!isCollapsed) {
+    <div
+      class="mobile-backdrop"
+      (click)="closeSidebarOnMobile()"
+      aria-hidden="true">
+    </div>
+  }
 
-  <main class="content">
+  <!-- Main Content -->
+  <div class="main-content">
 
-     <h2> Dashboard Content</h2>
+    <!-- Top Header -->
+    <header class="top-header">
 
-     <br><br >  
-    <p>Good Morning, Hari 👋</p>
+      <div class="breadcrumb">
+        <span class="breadcrumb-home">⌂</span>
+        <span class="breadcrumb-divider">/</span>
+        <span class="breadcrumb-current">Dashboard</span>
+      </div>
 
-  </main>
+      <div class="header-actions">
+
+        <div class="market-status">
+          <span class="status-dot"></span>
+          <span>Market Connected</span>
+        </div>
+
+        <button
+          type="button"
+          class="header-icon-button"
+          aria-label="Notifications"
+          title="Notifications">
+          ♧
+        </button>
+
+        <button
+          type="button"
+          class="header-icon-button"
+          aria-label="User profile"
+          title="User profile">
+          H
+        </button>
+
+      </div>
+
+    </header>
+
+    <!-- Routed Page Content -->
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
 
 </div>

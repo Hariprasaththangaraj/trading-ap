@@ -1,39 +1,52 @@
+
 import { Routes } from '@angular/router';
 
 import { Landing } from './landing/landing';
 import { LoginComponent } from './auth/login/login';
-import { LayoutComponent } from './layout/header/header';
 import { SignupComponent } from './auth/signup/signup';
+import { AppLayout } from './layout/header/header';
 import { DashboardComponent } from './dashboard/dashboard';
 import { BrokerManagement } from './broker-management/broker-management';
+
 export const routes: Routes = [
 
-    {
-        path: '',
-        component: Landing
-    },
+  // Public landing page
+  {
+    path: '',
+    component: Landing,
+    pathMatch: 'full'
+  },
 
-    {
-        path: 'login',
-        component: LoginComponent
-    },
+  // Authentication pages - no sidebar
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
 
-    {
-        path: 'signup',
-        component: SignupComponent
-    },
-
-    {
+  // Common layout for trading pages
+  {
+    path: '',
+    component: AppLayout,
+    children: [
+      {
         path: 'dashboard',
         component: DashboardComponent
-    },
-    {
-        path: 'layout',
-        component: LayoutComponent
-    },
-    {
+      },
+      {
         path: 'broker-management',
         component: BrokerManagement
-    }
+      }
+    ]
+  },
+
+  // Unknown routes
+  {
+    path: '**',
+    redirectTo: ''
+  }
 
 ];
