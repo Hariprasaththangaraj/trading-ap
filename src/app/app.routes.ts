@@ -46,7 +46,7 @@ export const routes: Routes = [
   // Unknown routes
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'dashboard'
   }
 
 ];
