@@ -22,9 +22,15 @@ export class AppLayout {
   // Sidebar state
   isCollapsed = false;
 
+  marketMonitorExpanded = false;
+
   // Toggle sidebar open / close
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  toggleMarketMonitor(): void {
+    this.marketMonitorExpanded = !this.marketMonitorExpanded;
   }
 
   // Close sidebar after selecting a menu on mobile

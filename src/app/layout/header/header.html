@@ -1,4 +1,3 @@
-
 <div class="app-layout" [class.collapsed]="isCollapsed">
 
   <!-- Sidebar -->
@@ -18,13 +17,8 @@
         </span>
       </a>
 
-      <button
-        type="button"
-        class="sidebar-toggle"
-        (click)="toggleSidebar()"
-        [attr.aria-expanded]="!isCollapsed"
-        aria-controls="app-sidebar"
-        [attr.title]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+      <button type="button" class="sidebar-toggle" (click)="toggleSidebar()" [attr.aria-expanded]="!isCollapsed"
+        aria-controls="app-sidebar" [attr.title]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
         [attr.aria-label]="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
 
         <span class="toggle-icon">
@@ -37,30 +31,72 @@
     <!-- Navigation -->
     <nav class="sidebar-nav" aria-label="Main navigation">
 
-      <a
-        class="nav-item"
-        routerLink="/dashboard"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="closeSidebarOnMobile()"
-        title="Dashboard">
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeSidebarOnMobile()" title="Dashboard">
 
         <span class="nav-icon">⌂</span>
         <span class="nav-label">Dashboard</span>
       </a>
 
-      <a
-        class="nav-item"
-        routerLink="/market-monitor"
-        routerLinkActive="active"
-        (click)="closeSidebarOnMobile()"
-        title="Market Monitor">
+<!-- Market Monitor -->
+<div class="nav-group">
 
-        <span class="nav-icon">▥</span>
-        <span class="nav-label">Market Monitor</span>
+  <button
+    type="button"
+    class="nav-item nav-parent"
+    [class.active]="marketMonitorExpanded"
+    (click)="toggleMarketMonitor()"
+    [attr.aria-expanded]="marketMonitorExpanded"
+    title="Market Monitor">
+
+    <span class="nav-icon">▥</span>
+    <span class="nav-label">Market Monitor</span>
+
+    <span class="nav-arrow">
+      {{ marketMonitorExpanded ? '' : '›' }}
+    </span>
+
+  </button>
+
+  @if (marketMonitorExpanded) {
+    <div class="nav-submenu">
+
+      <a class="nav-subitem" routerLink="/options-filter"
+         routerLinkActive="active">
+        <span class="nav-icon">▣</span>
+        <span class="nav-label">Options Filter</span>
       </a>
 
-      <a
+      <a class="nav-subitem" routerLink="/option-chain"
+         routerLinkActive="active">
+        <span class="nav-icon">▤</span>
+        <span class="nav-label">Option Chain</span>
+      </a>
+
+      <a class="nav-subitem" routerLink="/live-watch"
+         routerLinkActive="active">
+        <span class="nav-icon">◉</span>
+        <span class="nav-label">Live Watch</span>
+      </a>
+
+      <a class="nav-subitem" routerLink="/heatmap"
+         routerLinkActive="active">
+        <span class="nav-icon">▦</span>
+        <span class="nav-label">Heatmap</span>
+      </a>
+
+      <a class="nav-subitem" routerLink="/futures-data"
+         routerLinkActive="active">
+        <span class="nav-icon">↗</span>
+        <span class="nav-label">Futures Data</span>
+      </a>
+
+    </div>
+  }
+
+</div>
+
+      <!-- <a
         class="nav-item"
         routerLink="/option-chain"
         routerLinkActive="active"
@@ -69,9 +105,9 @@
 
         <span class="nav-icon">▤</span>
         <span class="nav-label">Option Chain</span>
-      </a>
+      </a> -->
 
-      <a
+      <!-- <a
         class="nav-item"
         routerLink="/strategies"
         routerLinkActive="active"
@@ -80,8 +116,8 @@
 
         <span class="nav-icon">◎</span>
         <span class="nav-label">Strategies</span>
-      </a>
-
+      </a> -->
+      <!-- 
       <a
         class="nav-item"
         routerLink="/backtesting"
@@ -124,20 +160,16 @@
 
         <span class="nav-icon">▣</span>
         <span class="nav-label">Orders &amp; Positions</span>
-      </a>
+      </a> -->
 
-      <a
-        class="nav-item"
-        routerLink="/broker-management"
-        routerLinkActive="active"
-        (click)="closeSidebarOnMobile()"
+      <a class="nav-item" routerLink="/broker-management" routerLinkActive="active" (click)="closeSidebarOnMobile()"
         title="Broker Connection">
 
         <span class="nav-icon">↔</span>
         <span class="nav-label">Broker Connection</span>
       </a>
 
-      <a
+      <!-- <a
         class="nav-item"
         routerLink="/settings"
         routerLinkActive="active"
@@ -146,7 +178,7 @@
 
         <span class="nav-icon">⚙</span>
         <span class="nav-label">Settings</span>
-      </a>
+      </a> -->
 
     </nav>
 
@@ -168,11 +200,8 @@
 
   <!-- Mobile Backdrop -->
   @if (!isCollapsed) {
-    <div
-      class="mobile-backdrop"
-      (click)="closeSidebarOnMobile()"
-      aria-hidden="true">
-    </div>
+  <div class="mobile-backdrop" (click)="closeSidebarOnMobile()" aria-hidden="true">
+  </div>
   }
 
   <!-- Main Content -->
@@ -194,19 +223,11 @@
           <span>Market Connected</span>
         </div>
 
-        <button
-          type="button"
-          class="header-icon-button"
-          aria-label="Notifications"
-          title="Notifications">
+        <button type="button" class="header-icon-button" aria-label="Notifications" title="Notifications">
           ♧
         </button>
 
-        <button
-          type="button"
-          class="header-icon-button"
-          aria-label="User profile"
-          title="User profile">
+        <button type="button" class="header-icon-button" aria-label="User profile" title="User profile">
           H
         </button>
 

@@ -441,3 +441,86 @@
     transition: none;
   }
 }
+
+.nav-group {
+  width: 100%;
+}
+
+.nav-parent {
+  width: 100%;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-arrow {
+  margin-left: auto;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.nav-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 5px 0 8px 14px;
+  margin-left: 12px;
+  border-left: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.nav-subitem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 38px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: #aebbd0;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-subitem:hover {
+  background: rgba(37, 99, 235, 0.15);
+  color: #ffffff;
+}
+
+.nav-subitem.active {
+  background: #112b4d;
+  color: #63a4ff;
+  font-weight: 600;
+}
+
+.nav-parent.active {
+  background: #1d3d70;
+  color: #ffffff;
+}
+
+.app-layout.collapsed .nav-submenu {
+  display: none;
+}
+
+/* Keep Market Monitor color unchanged on hover */
+.nav-parent,
+.nav-parent:hover,
+.nav-parent:focus,
+.nav-parent:focus-visible,
+.nav-parent:active {
+  background: transparent;
+  color: #aebbd0;
+}
+
+/* Preserve the existing parent color when submenu is expanded */
+.nav-parent.active,
+.nav-parent.active:hover,
+.nav-parent.active:focus {
+  background: transparent;
+  color: #aebbd0;
+}
+
+/* Keep the arrow color consistent */
+.nav-parent .nav-arrow {
+  color: #aebbd0;
+}
