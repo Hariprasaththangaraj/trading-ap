@@ -4,108 +4,131 @@
   min-width: 0;
 }
 
-.options-filter-page {
-  padding: 24px;
+.scanner-page {
+  min-height: 100%;
   min-width: 0;
+  padding: 24px;
+  box-sizing: border-box;
   color: #172033;
   background: #f3f7fd;
-  min-height: 100%;
-  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-.page-heading {
+.scanner-header,
+.panel-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 24px;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.scanner-header {
   margin-bottom: 24px;
 }
 
-.page-heading h1 {
-  font-size: 28px;
-  font-weight: 750;
+.scanner-header h1 {
   margin: 0 0 8px;
-  letter-spacing: -0.6px;
+  font-size: 27px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
 }
 
-.page-heading p,
-.contracts-header p {
+.scanner-header p,
+.panel-header p {
   margin: 0;
   color: #64748b;
-  font-size: 14px;
-}
-
-.market-summary {
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: center;
-  gap: 5px 16px;
-  min-width: 250px;
-  padding: 16px 20px;
-  border: 1px solid #e1eaf6;
-  border-radius: 12px;
-  background: #fff;
-}
-
-.market-symbol {
   font-size: 13px;
-  font-weight: 700;
-  color: #475569;
 }
 
-.market-price {
-  font-size: 22px;
-  font-weight: 750;
+.market-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 13px;
+  background: #fff;
+  border: 1px solid #dfe8f4;
+  border-radius: 9px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.market-change {
-  color: #079455;
-  font-size: 14px;
-  font-weight: 700;
-  text-align: right;
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #94a3b8;
 }
 
-.market-time {
-  grid-column: 1 / -1;
-  color: #94a3b8;
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  padding: 19px;
+  background: #fff;
+  border: 1px solid #e1e9f4;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgb(31 58 91 / 3%);
+}
+
+.summary-label,
+.summary-card small {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.summary-card strong {
+  display: block;
+  margin: 12px 0 8px;
+  font-size: 27px;
+}
+
+.summary-card small {
   font-size: 11px;
 }
 
-.contracts-card {
-  background: #fff;
-  border: 1px solid #e2eaf5;
-  border-radius: 14px;
-  padding: 24px 18px 16px;
-  box-shadow: 0 4px 18px rgb(31 58 91 / 4%);
+.scanner-panel {
   min-width: 0;
+  padding: 22px 18px 15px;
+  background: #fff;
+  border: 1px solid #e1e9f4;
+  border-radius: 13px;
+  box-shadow: 0 3px 14px rgb(31 58 91 / 3%);
 }
 
-.contracts-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin: 0 0 22px;
-  padding: 0 12px;
+.panel-header {
+  margin-bottom: 20px;
 }
 
-.contracts-header h2 {
+.panel-header h2 {
   margin: 0 0 7px;
-  font-size: 23px;
-  font-weight: 750;
+  font-size: 21px;
 }
 
-.contract-count {
-  background: #eef4fc;
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.sort-control select {
+  max-width: 230px;
+  padding: 10px;
+  border: 1px solid #dce5f0;
+  border-radius: 7px;
+  background: #fff;
   color: #334155;
-  border-radius: 8px;
-  padding: 11px 15px;
-  font-size: 13px;
-  font-weight: 700;
-  white-space: nowrap;
+  font-size: 12px;
 }
 
-.table-wrapper {
+.table-container {
   width: 100%;
   overflow-x: auto;
   border-radius: 8px;
@@ -113,81 +136,62 @@
   scrollbar-color: #aab7c8 #edf2f8;
 }
 
-.options-table {
+.scanner-table {
   width: 100%;
-  min-width: 1180px;
+  min-width: 1600px;
   border-collapse: separate;
   border-spacing: 0;
-  font-size: 13px;
   white-space: nowrap;
-}
-
-.options-table thead th {
-  padding: 15px 16px;
-  background: #f0f4fa;
-  color: #34445e;
-  font-weight: 700;
-  text-align: right;
-  border-bottom: 1px solid #dfe7f1;
-}
-
-.options-table thead th:first-child {
-  text-align: left;
-  border-top-left-radius: 8px;
-}
-
-.options-table thead th:last-child {
-  border-top-right-radius: 8px;
-}
-
-.options-table tbody td {
-  padding: 13px 16px;
-  text-align: right;
-  border-bottom: 1px solid #e9eef5;
-  color: #253249;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
-.options-table tbody tr:hover {
-  background: #f5f9ff;
+.scanner-table thead th {
+  padding: 15px 13px;
+  background: #f0f4fa;
+  color: #475569;
+  text-align: right;
+  font-weight: 700;
+  border-bottom: 1px solid #dfe7f1;
 }
 
-.options-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.options-table th:first-child,
-.options-table td:first-child {
+.scanner-table thead th:first-child,
+.scanner-table tbody td:first-child {
   text-align: left;
 }
 
-.symbol-cell {
-  font-weight: 750;
-  color: #111c30 !important;
+.scanner-table tbody td {
+  padding: 15px 13px;
+  text-align: right;
+  border-bottom: 1px solid #edf1f6;
 }
 
-.ltp-cell {
+.scanner-table tbody tr:hover {
+  background: #f5f9ff;
+}
+
+.scanner-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.contract-name strong,
+.contract-name small {
+  display: block;
+}
+
+.contract-name strong {
+  color: #172033;
+  font-size: 12px;
+}
+
+.contract-name small {
+  margin-top: 5px;
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.ltp {
   font-weight: 700;
-}
-
-.type-badge {
-  display: inline-block;
-  min-width: 35px;
-  padding: 5px 8px;
-  border-radius: 7px;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.call-badge {
-  color: #078650;
-  background: #d8f5e7;
-}
-
-.put-badge {
-  color: #e23c3c;
-  background: #ffe0e0;
 }
 
 .positive {
@@ -198,48 +202,137 @@
   color: #ef4444 !important;
 }
 
+.type-badge,
+.trend-badge,
+.signal-badge {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.ce-badge,
+.bullish {
+  background: #d8f5e7;
+  color: #078650;
+}
+
+.pe-badge,
+.bearish {
+  background: #ffe0e0;
+  color: #dc3c3c;
+}
+
+.neutral {
+  background: #e9eef5;
+  color: #64748b;
+}
+
+.score-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.score-cell strong {
+  min-width: 34px;
+  text-align: right;
+}
+
+.score-track {
+  width: 54px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e8edf5;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.score-high {
+  background: #16a36a;
+}
+
+.score-medium {
+  background: #e8a23b;
+}
+
+.score-low {
+  background: #94a3b8;
+}
+
+.signal-buy {
+  background: #d8f5e7;
+  color: #078650;
+}
+
+.signal-watch {
+  background: #fff0c2;
+  color: #946200;
+}
+
+.signal-avoid {
+  background: #edf0f5;
+  color: #64748b;
+}
+
 .empty-state {
+  padding: 40px !important;
   text-align: center !important;
-  padding: 48px 16px !important;
-  color: #94a3b8 !important;
+  color: #94a3b8;
 }
 
 .table-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 12px;
-  padding: 18px 12px 4px;
+  padding: 17px 10px 2px;
   color: #64748b;
-  font-size: 12px;
+  font-size: 11px;
 }
 
-@media (max-width: 900px) {
-  .options-filter-page {
-    padding: 16px;
+.disclaimer {
+  margin-top: 14px;
+  color: #7b8799;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .page-heading {
+  .panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .scanner-page {
+    padding: 14px;
+  }
+
+  .scanner-header {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .market-summary {
-    width: 100%;
-    box-sizing: border-box;
+  .summary-grid {
+    gap: 10px;
   }
 
-  .contracts-card {
-    padding: 18px 12px 12px;
-  }
-
-  .contracts-header {
-    align-items: flex-start;
-    flex-direction: column;
+  .summary-card {
+    padding: 14px;
   }
 
   .table-footer {
-    align-items: flex-start;
     flex-direction: column;
   }
 }

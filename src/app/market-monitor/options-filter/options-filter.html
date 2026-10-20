@@ -1,99 +1,200 @@
 
-<div class="options-filter-page">
+<div class="scanner-page">
 
-  <div class="page-heading">
+  <header class="scanner-header">
     <div>
-      <h1>Options Filter</h1>
-      <p>Live option contracts with market data and Greeks</p>
+      <h1>Options Buying Scanner</h1>
+      <p>Identify potential CE and PE buying opportunities</p>
     </div>
 
-    <div class="market-summary">
-      <span class="market-symbol">NIFTY</span>
-      <div class="market-price">24,862.35</div>
-      <div class="market-change">
-        ▲ 128.40 (0.52%)
-      </div>
-      <span class="market-time">Illustrative market data</span>
+    <div class="market-status">
+      <span class="status-dot"></span>
+      Sample Data
     </div>
-  </div>
+  </header>
 
-  <section class="contracts-card">
+  <!-- Summary cards -->
+  <section class="summary-grid">
+    <div class="summary-card">
+      <span class="summary-label">Total Contracts</span>
+      <strong>{{ contracts.length }}</strong>
+      <small>Contracts scanned</small>
+    </div>
 
-    <div class="contracts-header">
+    <div class="summary-card">
+      <span class="summary-label">CE Candidates</span>
+      <strong class="positive">{{ ceCandidates }}</strong>
+      <small>Score ≥ 60</small>
+    </div>
+
+    <div class="summary-card">
+      <span class="summary-label">PE Candidates</span>
+      <strong class="negative">{{ peCandidates }}</strong>
+      <small>Score ≥ 60</small>
+    </div>
+
+    <div class="summary-card">
+      <span class="summary-label">Strong Setups</span>
+      <strong>{{ strongCandidates }}</strong>
+      <small>Score ≥ 80</small>
+    </div>
+  </section>
+
+  <!-- Scanner table -->
+  <section class="scanner-panel">
+
+    <div class="panel-header">
       <div>
-        <h2>Matching Contracts</h2>
-        <p>Options market data and Greeks</p>
+        <h2>Buying Opportunities</h2>
+        <p>Ranked by rule-based opportunity score</p>
       </div>
 
-      <span class="contract-count">
-        Total: {{ contracts.length }} contracts
-      </span>
+      <div class="sort-control">
+        <label for="sortOrder">Sort by</label>
+        <select
+          id="sortOrder"
+          [value]="sortOrder"
+          (change)="changeSort($event)">
+          <option value="score">Buy Score: High to Low</option>
+          <option value="premium">Premium Change: High to Low</option>
+          <option value="volume">Volume Surge: High to Low</option>
+        </select>
+      </div>
     </div>
 
-    <div class="table-wrapper">
-      <table class="options-table">
+    <div class="table-container">
+      <table class="scanner-table">
 
-        <thead>
-          <tr>
-            <th>Symbol ↕</th>
-            <th>Type ↕</th>
-            <th>Strike ↕</th>
-            <th>LTP ↕</th>
-            <th>Change % ↕</th>
-            <th>IV ↕</th>
-            <th>Delta ↕</th>
-            <th>Gamma ↕</th>
-            <th>Theta ↕</th>
-            <th>Vega ↕</th>
-            <th>Volume ↕</th>
-            <th>OI ↕</th>
-          </tr>
-        </thead>
+<thead>
+  <tr>
+    
+    <th>Contract</th>
+    <th>Type</th>
+    <th>LTP</th>
+
+    <th>Trend</th>
+    <th>Buy Score</th>
+    <th>Signal</th>
+
+    <th>Premium Change</th>
+    <th>Volume Surge</th>
+    <th>OI Change</th>
+    <th>Underlying</th>
+    <th>Delta</th>
+    <th>Gamma</th>
+    <th>IV Change</th>
+  </tr>
+</thead>
 
         <tbody>
-          @for (contract of contracts; track contract.id) {
+          @for (contract of sortedContracts; track contract.id) {
             <tr>
-              <td class="symbol-cell">{{ contract.symbol }}</td>
 
+
+              <!-- 4. Contract -->
+              <td class="contract-name">
+                <strong>{{ contract.symbol }}</strong>
+                <small>{{ contract.strike | number }} strike</small>
+              </td>
+
+              <!-- 5. Type -->
               <td>
                 <span
                   class="type-badge"
-                  [class.call-badge]="contract.type === 'CE'"
-                  [class.put-badge]="contract.type === 'PE'">
+                  [class.ce-badge]="contract.type === 'CE'"
+                  [class.pe-badge]="contract.type === 'PE'">
                   {{ contract.type }}
                 </span>
               </td>
 
-              <td>{{ contract.strike | number }}</td>
-
-              <td class="ltp-cell">
+              <!-- 6. LTP -->
+              <td class="ltp">
                 {{ contract.ltp | number:'1.2-2' }}
               </td>
 
-              <td
-                [class.positive]="contract.changePercent >= 0"
-                [class.negative]="contract.changePercent < 0">
-                {{ contract.changePercent > 0 ? '+' : '' }}{{ contract.changePercent | number:'1.2-2' }}%
+                            <!-- 1. Trend -->
+              <td>
+                <span
+                  class="trend-badge"
+                  [class.bullish]="contract.trend === 'BULLISH'"
+                  [class.bearish]="contract.trend === 'BEARISH'"
+                  [class.neutral]="contract.trend === 'NEUTRAL'">
+                  {{ contract.trend }}
+                </span>
               </td>
 
-              <td>{{ contract.iv | number:'1.1-1' }}</td>
-              <td>{{ contract.delta | number:'1.2-4' }}</td>
+              <!-- 2. Buy Score -->
+              <td>
+                <div class="score-cell">
+                  <div class="score-track">
+                    <div
+                      class="score-fill"
+                      [class.score-high]="contract.score >= 80"
+                      [class.score-medium]="contract.score >= 60 && contract.score < 80"
+                      [class.score-low]="contract.score < 60"
+                      [style.width.%]="contract.score">
+                    </div>
+                  </div>
+                  <strong>{{ contract.score }}%</strong>
+                </div>
+              </td>
+
+              <!-- 3. Signal -->
+              <td>
+                <span
+                  class="signal-badge"
+                  [class.signal-buy]="contract.signal === 'BUY SETUP'"
+                  [class.signal-watch]="contract.signal === 'WATCH'"
+                  [class.signal-avoid]="contract.signal === 'AVOID'">
+                  {{ contract.signal }}
+                </span>
+              </td>
+
+              <!-- 7. Premium Change -->
+              <td
+                [class.positive]="contract.premiumChange >= 0"
+                [class.negative]="contract.premiumChange < 0">
+                {{ contract.premiumChange > 0 ? '+' : '' }}{{ contract.premiumChange | number:'1.2-2' }}%
+              </td>
+
+              <!-- 8. Volume Surge -->
+              <td
+                [class.positive]="contract.volumeSurge >= 0"
+                [class.negative]="contract.volumeSurge < 0">
+                {{ contract.volumeSurge > 0 ? '+' : '' }}{{ contract.volumeSurge | number:'1.1-1' }}%
+              </td>
+
+              <!-- 9. OI Change -->
+              <td
+                [class.positive]="contract.oiChange >= 0"
+                [class.negative]="contract.oiChange < 0">
+                {{ contract.oiChange > 0 ? '+' : '' }}{{ contract.oiChange | number:'1.1-1' }}%
+              </td>
+
+              <!-- 10. Underlying Change -->
+              <td
+                [class.positive]="contract.underlyingChange >= 0"
+                [class.negative]="contract.underlyingChange < 0">
+                {{ contract.underlyingChange > 0 ? '+' : '' }}{{ contract.underlyingChange | number:'1.2-2' }}%
+              </td>
+
+              <!-- 11. Delta -->
+              <td>{{ contract.delta | number:'1.2-2' }}</td>
+
+              <!-- 12. Gamma -->
               <td>{{ contract.gamma | number:'1.4-4' }}</td>
 
+              <!-- 13. IV Change -->
               <td
-                [class.positive]="contract.theta >= 0"
-                [class.negative]="contract.theta < 0">
-                {{ contract.theta | number:'1.2-2' }}
+                [class.positive]="contract.ivChange <= 0"
+                [class.negative]="contract.ivChange > 0">
+                {{ contract.ivChange > 0 ? '+' : '' }}{{ contract.ivChange | number:'1.1-1' }}%
               </td>
-
-              <td>{{ contract.vega | number:'1.2-2' }}</td>
-              <td>{{ contract.volume | number }}</td>
-              <td>{{ contract.oi | number }}</td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="12" class="empty-state">
-                No option contracts available.
+              <td colspan="13" class="empty-state">
+                No contracts available.
               </td>
             </tr>
           }
@@ -102,11 +203,16 @@
       </table>
     </div>
 
-    <div class="table-footer">
-      <span>Showing {{ contracts.length }} contracts</span>
+    <footer class="table-footer">
+      <span>{{ sortedContracts.length }} contracts displayed</span>
       <span>Scroll horizontally to view all columns →</span>
-    </div>
+    </footer>
 
   </section>
+
+  <p class="disclaimer">
+    Sample data only. Buy Score is a rule-based rating, not a probability
+    of profit or a guaranteed trading signal.
+  </p>
 
 </div>
