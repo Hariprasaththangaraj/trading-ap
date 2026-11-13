@@ -17,17 +17,26 @@
 
   </section>
 
+  <div class="section-header">
+    <h2>Market Overview</h2>
+
+    <div class="header-actions">
+      <button type="button" class="get-data-btn" (click)="startPolling()" [disabled]="isRunning()">
+        Get Data
+      </button>
+
+      <button type="button" class="stop-btn" (click)="stopPolling()" [disabled]="!isRunning()">
+        Stop
+      </button>
+
+      <span class="live-badge">LIVE</span>
+    </div>
+  </div>
+
+  <p class="error-text" *ngIf="errorMessage()">{{ errorMessage() }}</p>
 
   <!-- Market Cards -->
   <section class="market-section">
-
-    <div class="section-header">
-      <h2>Market Overview</h2>
-
-      <span class="live-badge">
-        LIVE
-      </span>
-    </div>
 
 
     <div class="market-grid">
@@ -83,7 +92,71 @@
       </div>
 
 
-      <!-- GOLD -->
+      <!-- bankex -->
+      <div class="market-card">
+
+        <div class="market-card-header">
+          <span>BANKEX</span>
+          <span class="market-symbol">BSE</span>
+        </div>
+
+        <h3>₹76,420</h3>
+
+        <p class="positive">
+          +210 &nbsp; +0.28%
+        </p>
+
+      </div>
+
+      <!-- CRUDE OIL -->
+      <div class="market-card">
+
+        <div class="market-card-header">
+          <span>CRUDE OIL</span>
+          <span class="market-symbol">MCX</span>
+        </div>
+
+        <h3>{{ crudeOil()?.ltp ?? '--' }}</h3>
+
+        <p [ngClass]="(crudeOil()?.change ?? 0) >= 0 ? 'positive' : 'negative'">
+          {{ crudeOil()?.change ?? '--' }} &nbsp; {{ crudeOil()?.changePercent ?? '--' }}%
+        </p>
+
+      </div>
+
+      <!-- Natural Gas -->
+      <div class="market-card">
+
+        <div class="market-card-header">
+          <span>NATURAL GAS </span>
+          <span class="market-symbol">MCX</span>
+        </div>
+
+        <h3>25,420.65</h3>
+
+        <p class="positive">
+          +125.40 &nbsp; +0.50%
+        </p>
+
+      </div>
+
+      <!-- Silver -->
+      <div class="market-card">
+
+        <div class="market-card-header">
+          <span>SILVER</span>
+          <span class="market-symbol">MCX</span>
+        </div>
+
+        <h3>25,420.65</h3>
+
+        <p class="positive">
+          +125.40 &nbsp; +0.50%
+        </p>
+
+      </div>
+
+      <!-- Gold -->
       <div class="market-card">
 
         <div class="market-card-header">
@@ -91,10 +164,10 @@
           <span class="market-symbol">MCX</span>
         </div>
 
-        <h3>₹76,420</h3>
+        <h3>25,420.65</h3>
 
         <p class="positive">
-          +210 &nbsp; +0.28%
+          +125.40 &nbsp; +0.50%
         </p>
 
       </div>

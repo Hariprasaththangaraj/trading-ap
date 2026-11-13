@@ -9,6 +9,7 @@ import { BrokerManagement } from './broker-management/broker-management';
 import { AppLayout } from './layout/header/header';
 import { MarketMonitor } from './market-monitor/market-monitor';
 import { OptionsFilter } from './market-monitor/options-filter/options-filter';
+import { ContractMaster } from './contract-master/contract-master';
 
 export const routes: Routes = [
 
@@ -40,6 +41,10 @@ export const routes: Routes = [
       {
         path: 'broker-management',
         component: BrokerManagement
+      },
+      {
+        path: 'contract-master',
+        component: ContractMaster
       },
       {
         path: 'market-monitor',

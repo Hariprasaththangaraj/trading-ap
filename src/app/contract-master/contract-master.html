@@ -1,0 +1,173 @@
+
+<div class="upload-page">
+  <section class="upload-card">
+
+    <!-- Header -->
+    <div class="upload-heading">
+      <div class="file-icon">
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+          <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+          <path d="M13 2v7h7"/>
+        </svg>
+      </div>
+
+      <div>
+        <h2>Upload Contract / Instrument File</h2>
+        <p>Select a JSON file to upload contract master data.</p>
+      </div>
+    </div>
+
+    <!-- Upload Form -->
+    <form (ngSubmit)="uploadFile()">
+
+      <div class="file-upload-row">
+
+        <!-- File Selection -->
+        <div class="file-input-wrapper">
+
+          <input
+            #fileInput
+            type="file"
+            id="contractFile"
+            accept=".json,application/json"
+            (change)="onFileSelected($event)"
+            [disabled]="isUploading"
+            hidden
+          />
+
+          <label
+            for="contractFile"
+            class="choose-file-button"
+            [class.disabled]="isUploading">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/>
+            </svg>
+
+            Choose file
+          </label>
+
+          <span
+            class="file-name"
+            [class.placeholder]="!selectedFile"
+            [title]="selectedFile?.name || 'No file chosen'">
+
+            {{ selectedFile?.name || 'No file chosen' }}
+
+          </span>
+
+          <!-- Clear Selected File -->
+          <button
+            *ngIf="selectedFile"
+            type="button"
+            class="remove-file"
+            title="Remove selected file"
+            aria-label="Remove selected file"
+            (click)="clearFile(fileInput)"
+            [disabled]="isUploading">
+
+            &times;
+
+          </button>
+
+        </div>
+
+        <!-- Upload Button -->
+        <button
+          type="submit"
+          class="upload-button"
+          [disabled]="!selectedFile || isUploading">
+
+          <span
+            *ngIf="!isUploading"
+            class="upload-button-content">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8">
+              <path d="M12 16V3"/>
+              <path d="m7 8 5-5 5 5"/>
+              <path d="M5 13v7h14v-7"/>
+            </svg>
+
+            Upload
+
+          </span>
+
+          <span
+            *ngIf="isUploading"
+            class="upload-button-content">
+
+            <span class="spinner"></span>
+            Uploading...
+
+          </span>
+
+        </button>
+
+      </div>
+
+      <!-- Validation Error -->
+      <div
+        *ngIf="errorMessage"
+        class="validation-error"
+        role="alert">
+
+        {{ errorMessage }}
+
+      </div>
+
+      <!-- Upload Progress -->
+      <div
+        class="upload-progress"
+        *ngIf="isUploading">
+
+        <div class="progress-track">
+          <div class="progress-bar"></div>
+        </div>
+
+        <span>Uploading your file. Please wait...</span>
+
+      </div>
+
+      <!-- Success Message -->
+      <div
+        *ngIf="successMessage"
+        class="upload-result success"
+        role="status">
+
+        <span class="status-icon">✓</span>
+        {{ successMessage }}
+
+      </div>
+
+      <!-- API Error -->
+      <div
+        *ngIf="uploadError"
+        class="upload-result failure"
+        role="alert">
+
+        {{ uploadError }}
+
+      </div>
+
+      <!-- File Guidelines -->
+      <div class="upload-guidelines">
+
+        <p>Supported format: JSON (.json)</p>
+        <p>Maximum file size: 50 MB</p>
+
+      </div>
+
+    </form>
+
+  </section>
+</div>
