@@ -65,27 +65,42 @@ export class DashboardComponent {
           )
         )
       )
-      .subscribe({
-        next: data => {
+.subscribe({
+  next: data => {
 
-          const newLtp = data?.ltp;
+    this.crudeOil.update(current => {
 
-          if (
-            newLtp !== null &&
-            newLtp !== undefined &&
-            newLtp !== ''
-          ) {
+      const updated = { ...current };
 
-            this.crudeOil.update(current => ({
-              ...current,
-              ...data
-            }));
+      // Update LTP only when valid
+      if (
+        data?.ltp !== null &&
+        data?.ltp !== undefined &&
+        data?.ltp !== ''
+      ) {
+        updated.ltp = data.ltp;
+      }
 
-          }
+      // Update Percentage Change only when valid
+      if (
+        data?.percentageChange !== null &&
+        data?.percentageChange !== undefined &&
+        data?.percentageChange !== ''
+      ) {
+        updated.percentageChange = data.percentageChange;
+      }
 
-          this.errorMessage.set('');
-        }
-      });
+      // Update token when available
+      if (data?.token !== null && data?.token !== undefined) {
+        updated.token = data.token;
+      }
+
+      return updated;
+    });
+
+    this.errorMessage.set('');
+  }
+});
   }
 
   stopPolling(): void {

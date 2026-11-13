@@ -118,8 +118,12 @@
 
         <h3>{{ crudeOil()?.ltp ?? '--' }}</h3>
 
-        <p [ngClass]="(crudeOil()?.change ?? 0) >= 0 ? 'positive' : 'negative'">
-          {{ crudeOil()?.change ?? '--' }} &nbsp; {{ crudeOil()?.changePercent ?? '--' }}%
+        <p [ngClass]="
+      (+(crudeOil()?.percentageChange ?? 0)) >= 0
+        ? 'positive'
+        : 'negative'
+    ">
+          {{ crudeOil()?.percentageChange ?? '--' }}%
         </p>
 
       </div>
